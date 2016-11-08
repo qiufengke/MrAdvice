@@ -49,13 +49,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MrAdvice\MrAdvice.csproj">
-      <Project>{3C764938-4C4A-4128-B20F-97EF2ED4A49B}</Project>
-      <Name>MrAdvice</Name>
-    </ProjectReference>
+    <None Include="ExternalAdvices.snk" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ExternalAdvices.snk" />
+    <ProjectReference Include="..\..\MrAdvice.Portable\MrAdvice.Portable.csproj">
+      <Project>{3C764938-4C4A-4128-B20F-97EF2ED4A49B}</Project>
+      <Name>MrAdvice.Portable</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

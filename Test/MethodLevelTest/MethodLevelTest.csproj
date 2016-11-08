@@ -108,9 +108,9 @@
     <Compile Include="WeavingTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MrAdvice\MrAdvice.csproj">
+    <ProjectReference Include="..\..\MrAdvice.Portable\MrAdvice.Portable.csproj">
       <Project>{3C764938-4C4A-4128-B20F-97EF2ED4A49B}</Project>
-      <Name>MrAdvice</Name>
+      <Name>MrAdvice.Portable</Name>
     </ProjectReference>
     <ProjectReference Include="..\ExternalAdvices\ExternalAdvices.csproj">
       <Project>{C99CF600-A5DB-4CF2-B16E-7688C8CEAE3D}</Project>

@@ -42,7 +42,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\MrAdvice\Properties\MrAdvice.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\MrAdvice.Portable\Properties\MrAdvice.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -66,7 +66,7 @@
     <Compile Include="..\MrAdvice\Introduction\IntroductionRules.cs">
       <Link>Introduction\IntroductionRules.cs</Link>
     </Compile>
-    <Compile Include="..\MrAdvice\Properties\ProductInfo.cs">
+    <Compile Include="..\MrAdvice.Portable\Properties\ProductInfo.cs">
       <Link>Properties\ProductInfo.cs</Link>
     </Compile>
     <Compile Include="Annotation\MarkedNode.cs" />
@@ -117,7 +117,7 @@
     <Compile Include="Weaver\WeaverMethodWeavingContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\MrAdvice\Properties\MrAdvice.snk">
+    <None Include="..\MrAdvice.Portable\Properties\MrAdvice.snk">
       <Link>Properties\MrAdvice.snk</Link>
     </None>
     <None Include="MrAdvice.nuspec">
@@ -145,9 +145,9 @@
     <None Include="Debug.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MrAdvice\MrAdvice.csproj">
+    <ProjectReference Include="..\MrAdvice.Portable\MrAdvice.Portable.csproj">
       <Project>{3C764938-4C4A-4128-B20F-97EF2ED4A49B}</Project>
-      <Name>MrAdvice</Name>
+      <Name>MrAdvice.Portable</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
