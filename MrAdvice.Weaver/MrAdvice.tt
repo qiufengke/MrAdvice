@@ -24,9 +24,9 @@
   <files>
     <file src="MrAdvice.targets" target="build"/>
     <file src="bin\$ConfigurationName$\MrAdvice.Weaver.exe" target="build"/>
-    <file src="..\MrAdvice\bin\$ConfigurationName$\MrAdvice.dll" target="lib\portable-net40+sl5+wp8+uap10.0"/>
-    <file src="..\MrAdvice\bin\$ConfigurationName$\MrAdvice.xml" target="lib\portable-net40+sl5+wp8+uap10.0"/>
-    <file src="..\MrAdvice\bin\$ConfigurationName$\MrAdvice.pdb" target="lib\portable-net40+sl5+wp8+uap10.0"/>
+    <file src="..\MrAdvice\bin\$ConfigurationName$\MrAdvice.dll" target="lib\portable-net40+sl5+wp8+uap10.0+netcore1.0"/>
+    <file src="..\MrAdvice\bin\$ConfigurationName$\MrAdvice.xml" target="lib\portable-net40+sl5+wp8+uap10.0+netcore1.0"/>
+    <file src="..\MrAdvice\bin\$ConfigurationName$\MrAdvice.pdb" target="lib\portable-net40+sl5+wp8+uap10.0+netcore1.0"/>
     <file src="..\MrAdvice\**\*.cs" target="src"/>
   </files>
 </package>

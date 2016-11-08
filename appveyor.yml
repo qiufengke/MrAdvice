@@ -6,6 +6,7 @@ branches:
   only:
     - fody
     - master
+    - dotnet-core
 
 before_build:
   nuget restore MrAdvice.sln
