@@ -188,3 +188,4 @@ MrAdvice.Fody/MrAdvice.nuspec
 *.debug
 
 .vs/
+*.lock.json
