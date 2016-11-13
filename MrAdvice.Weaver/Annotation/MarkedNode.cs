@@ -40,6 +40,14 @@ namespace ArxOne.MrAdvice.Annotation
         /// </value>
         public bool AbstractTarget => Definitions.Any(d => d.AbstractTarget);
 
+        /// <summary>
+        /// Gets a value indicating whether dependencies have to be collected here.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [collect dependencies]; otherwise, <c>false</c>.
+        /// </value>
+        public bool CollectDependencies => Definitions.Any(d => d.CollectDependencies);
+
         public MarkedNode(ReflectionNode node, IEnumerable<MarkerDefinition> definitions)
         {
             Node = node;

@@ -159,6 +159,8 @@ namespace ArxOne.MrAdvice.Weaver
                 WritePointcutBody(method, innerMethod, false, context);
                 lock (method.DeclaringType)
                     method.DeclaringType.Methods.Add(innerMethod);
+
+                context.GetReflection(method).InnerMethod = innerMethod;
             }
         }
 
@@ -519,8 +521,12 @@ namespace ArxOne.MrAdvice.Weaver
         /// <param name="context">The context.</param>
         private void WeaveInfoAdvices(ModuleDef moduleDefinition, TypeDef typeDefinition, ITypeDefOrRef infoAdviceInterface, WeavingContext context)
         {
-            if (GetMarkedMethods(new TypeReflectionNode(typeDefinition, null), infoAdviceInterface, context).Where(IsWeavable).Any())
+            var markedMethods = GetMarkedMethods(new TypeReflectionNode(typeDefinition, null), infoAdviceInterface, context).ToArray();
+            if (markedMethods.Where(IsWeavable).Any())
             {
+                foreach (var markerMethod in markedMethods)
+                    CollectDependencies(markerMethod, context);
+
                 Logging.WriteDebug("Weaving type '{0}' for info", typeDefinition.FullName);
                 WeaveInfoAdvices(typeDefinition, moduleDefinition, false);
             }
@@ -537,6 +543,7 @@ namespace ArxOne.MrAdvice.Weaver
             var method = markedMethod.Node.Method;
             try
             {
+                CollectDependencies(markedMethod, context);
                 WeaveAdvices(markedMethod, context);
                 WeaveIntroductions(method, moduleDefinition, context);
             }

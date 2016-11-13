@@ -34,14 +34,24 @@ namespace ArxOne.MrAdvice.Annotation
         public bool AbstractTarget { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MarkerDefinition"/> class.
+        /// Gets a value indicating whether [collect dependencies].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [collect dependencies]; otherwise, <c>false</c>.
+        /// </value>
+        public bool CollectDependencies { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MarkerDefinition" /> class.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="abstractTarget">if set to <c>true</c> [abstract target].</param>
-        public MarkerDefinition(ITypeDefOrRef type, bool abstractTarget)
+        /// <param name="collectDependencies">if set to <c>true</c> [collect dependencies].</param>
+        public MarkerDefinition(ITypeDefOrRef type, bool abstractTarget, bool collectDependencies)
         {
             Type = type;
             AbstractTarget = abstractTarget;
+            CollectDependencies = collectDependencies;
         }
     }
 }

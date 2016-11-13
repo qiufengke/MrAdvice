@@ -7,13 +7,13 @@
 
 namespace ArxOne.MrAdvice.Weaver
 {
-    using System.Collections;
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using Advice;
     using Annotation;
     using dnlib.DotNet;
     using Pointcut;
+    using Reflection;
     using Utility;
 
     /// <summary>
@@ -22,8 +22,6 @@ namespace ArxOne.MrAdvice.Weaver
     /// </summary>
     internal class WeavingContext
     {
-        private readonly TypeResolver _typeResolver;
-
         /// <summary>
         /// Gets or sets the type of the <see cref="CompilerGeneratedAttribute"/>.
         /// </summary>
@@ -47,6 +45,14 @@ namespace ArxOne.MrAdvice.Weaver
         /// The type of the abstract target attribute.
         /// </value>
         public ITypeDefOrRef AbstractTargetAttributeType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the <see cref="CollectDependenciesAttribute"/>.
+        /// </summary>
+        /// <value>
+        /// The type of the collect dependencies attribute.
+        /// </value>
+        public ITypeDefOrRef CollectDependenciesAttributeType { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the <see cref="IAdvice"/>.
@@ -121,5 +127,16 @@ namespace ArxOne.MrAdvice.Weaver
         /// The type of the exclude advice attribute.
         /// </value>
         public TypeDef ExcludeAdviceAttributeType { get; set; }
+
+        private readonly IDictionary<MethodDef, MethodReflection> _reflection = new Dictionary<MethodDef, MethodReflection>(new MethodReferenceComparer());
+
+        public MethodReflection GetReflection(MethodDef method)
+        {
+            MethodReflection reflection;
+            if (_reflection.TryGetValue(method, out reflection))
+                return reflection;
+            _reflection[method] = reflection = new MethodReflection(method);
+            return reflection;
+        }
     }
 }

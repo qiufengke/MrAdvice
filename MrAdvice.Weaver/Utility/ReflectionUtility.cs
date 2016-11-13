@@ -7,9 +7,11 @@
 namespace ArxOne.MrAdvice.Utility
 {
     using System;
+    using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
     using dnlib.DotNet;
+    using StitcherBoy.Logging;
 
     /// <summary>
     /// What is extreme laziness? :)
@@ -194,6 +196,49 @@ namespace ArxOne.MrAdvice.Utility
             if (!methodDefinition.IsSpecialName)
                 return false;
             return methodDefinition.Name.StartsWith("get_") || methodDefinition.Name.StartsWith("set_");
+        }
+
+        internal static PropertyDef GetProperty(this MethodDef methodDef, out bool setter)
+        {
+            setter = false;
+            if (!methodDef.IsPropertyMethod())
+                return null;
+
+            // First, a quick test by name
+            var matchingProperty = methodDef.DeclaringType.FindProperty(GetPropertyName(methodDef.Name));
+            if (IsMatchingProperty(matchingProperty, methodDef, ref setter))
+                return matchingProperty;
+
+            // Then, a slow test
+            foreach (var property in methodDef.DeclaringType.Properties)
+            {
+                if (IsMatchingProperty(property, methodDef, ref setter))
+                    return property;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the matching property.
+        /// </summary>
+        /// <param name="property">The property.</param>
+        /// <param name="methodDef">The method definition.</param>
+        /// <param name="setter">if set to <c>true</c> [setter].</param>
+        /// <returns></returns>
+        private static bool IsMatchingProperty(PropertyDef property, MethodDef methodDef, ref bool setter)
+        {
+            if (property.GetMethod == methodDef)
+            {
+                setter = false;
+                return true;
+            }
+            if (property.SetMethod == methodDef)
+            {
+                setter = true;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>

@@ -133,6 +133,7 @@ namespace ArxOne.MrAdvice.Weaver
                 CompilerGeneratedAttributeType = moduleDefinition.Import(typeof(CompilerGeneratedAttribute)),
                 PriorityAttributeType = TypeResolver.Resolve(moduleDefinition, typeof(PriorityAttribute)),
                 AbstractTargetAttributeType = TypeResolver.Resolve(moduleDefinition, typeof(AbstractTargetAttribute)),
+                CollectDependenciesAttributeType = TypeResolver.Resolve(moduleDefinition, typeof(CollectDependenciesAttribute)),
                 AdviceInterfaceType = TypeResolver.Resolve(moduleDefinition, typeof(IAdvice)),
                 WeavingAdviceInterfaceType = TypeResolver.Resolve(moduleDefinition, typeof(IWeavingAdvice)),
                 ExecutionPointAttributeDefaultCtor = moduleDefinition.Import(TypeResolver.Resolve(moduleDefinition, typeof(ExecutionPointAttribute)).FindDefaultConstructor()),
@@ -435,7 +436,12 @@ namespace ArxOne.MrAdvice.Weaver
             var abstractTarget = typeDefinition.CustomAttributes.Any(a => a.AttributeType.SafeEquivalent(context.AbstractTargetAttributeType));
             if (abstractTarget)
                 Logging.WriteDebug("Advice {0} abstracts target", typeDefinition.FullName);
-            var markerDefinition = new MarkerDefinition(typeDefinition, abstractTarget);
+
+            var collectDependencies = typeDefinition.CustomAttributes.Any(a => a.AttributeType.SafeEquivalent(context.CollectDependenciesAttributeType));
+            if (abstractTarget)
+                Logging.WriteDebug("Advice {0} collects dependencies", typeDefinition.FullName);
+
+            var markerDefinition = new MarkerDefinition(typeDefinition, abstractTarget, collectDependencies);
             return markerDefinition;
         }
 
