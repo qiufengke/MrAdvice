@@ -8,9 +8,18 @@
 namespace ArxOne.MrAdvice.Reflection
 {
     using System;
+    using System.Reflection;
 
     /// <summary>
-    /// Reflection entry points
+    /// Reflection entry points.
+    /// Ideas:
+    /// - Methods written in target assembly provide shortcuts to methods below
+    /// - Shortcuts take parameters: firsts are method/type handle, then other parameters:
+    ///   - execution point (method handle)
+    ///   - referenced fields handles (for local fields on non generic types)
+    ///   - referenced fields+types handlers
+    ///   - invoked methods handles (for local methods on non generic types)
+    ///   - invoked mehohds+types handles
     /// </summary>
     public static class Registry
     {
@@ -24,7 +33,11 @@ namespace ArxOne.MrAdvice.Reflection
         /// <param name="executionPointHandle">The execution point handle.</param>
         public static void SetExecutionPoint(RuntimeMethodHandle methodHandle, RuntimeTypeHandle typeHandle, RuntimeMethodHandle executionPointHandle)
         {
-
+            var executionPointMethod = typeHandle == VoidTypeHandle
+                ? MethodBase.GetMethodFromHandle(executionPointHandle)
+                : MethodBase.GetMethodFromHandle(executionPointHandle, typeHandle);
+            // cast is safe, execution point is never a ctor (it is always an inner method)
+            ReflectionInfo.Get(methodHandle, typeHandle).ExecutionPoint = (MethodInfo)executionPointMethod;
         }
 
         /// <summary>
@@ -35,6 +48,19 @@ namespace ArxOne.MrAdvice.Reflection
         public static void SetExecutionPoint(RuntimeMethodHandle methodHandle, RuntimeMethodHandle executionPointHandle)
         {
             SetExecutionPoint(methodHandle, VoidTypeHandle, executionPointHandle);
+        }
+
+        /// <summary>
+        /// Adds the referenced fields.
+        /// </summary>
+        /// <param name="methodHandle">The method handle.</param>
+        /// <param name="typeHandle">The type handle.</param>
+        /// <param name="fields">The fields.</param>
+        /// <param name="fieldsTypes">The fields types.</param>
+        public static void AddReferencedFields(RuntimeMethodHandle methodHandle, RuntimeTypeHandle typeHandle, RuntimeFieldHandle[] fields,
+            RuntimeTypeHandle[] fieldsTypes)
+        {
+           // ReflectionInfo.Get(methodHandle,typeHandle)
         }
     }
 }
