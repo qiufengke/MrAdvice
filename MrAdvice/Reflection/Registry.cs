@@ -33,7 +33,7 @@ namespace ArxOne.MrAdvice.Reflection
         /// <param name="executionPointHandle">The execution point handle.</param>
         public static void SetExecutionPoint(RuntimeMethodHandle methodHandle, RuntimeTypeHandle typeHandle, RuntimeMethodHandle executionPointHandle)
         {
-            var executionPointMethod = typeHandle == VoidTypeHandle
+            var executionPointMethod = typeHandle.Equals(VoidTypeHandle)
                 ? MethodBase.GetMethodFromHandle(executionPointHandle)
                 : MethodBase.GetMethodFromHandle(executionPointHandle, typeHandle);
             // cast is safe, execution point is never a ctor (it is always an inner method)
@@ -60,7 +60,7 @@ namespace ArxOne.MrAdvice.Reflection
         public static void AddReferencedFields(RuntimeMethodHandle methodHandle, RuntimeTypeHandle typeHandle, RuntimeFieldHandle[] fields,
             RuntimeTypeHandle[] fieldsTypes)
         {
-           // ReflectionInfo.Get(methodHandle,typeHandle)
+            // ReflectionInfo.Get(methodHandle,typeHandle)
         }
     }
 }
