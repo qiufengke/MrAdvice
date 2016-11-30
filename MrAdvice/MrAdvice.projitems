@@ -37,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Advice\SyncAdviceContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Advice\WeavingContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Annotation\AbstractTargetAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Annotation\CollectDependenciesAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Annotation\ExcludeAdvicesAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Annotation\ExcludePointcutAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Annotation\ExecutionPointAttribute.cs" />
@@ -55,6 +56,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Invocation.Pointcuts.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pointcut\PointcutSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pointcut\PointcutSelectorRule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reflection\ReflectionInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reflection\Registry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Threading\TaskAccessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Threading\TaskCompletionSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Threading\TaskCompletionSourceImplementation.cs" />
