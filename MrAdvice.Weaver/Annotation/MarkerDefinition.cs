@@ -22,7 +22,7 @@ namespace ArxOne.MrAdvice.Annotation
         /// <value>
         /// The type.
         /// </value>
-        public ITypeDefOrRef Type { get; }
+        public TypeDef Type { get; }
 
         /// <summary>
         /// Gets a value indicating whether the marker abstracts target.
@@ -47,7 +47,7 @@ namespace ArxOne.MrAdvice.Annotation
         /// <param name="type">The type.</param>
         /// <param name="abstractTarget">if set to <c>true</c> [abstract target].</param>
         /// <param name="collectDependencies">if set to <c>true</c> [collect dependencies].</param>
-        public MarkerDefinition(ITypeDefOrRef type, bool abstractTarget, bool collectDependencies)
+        public MarkerDefinition(TypeDef type, bool abstractTarget, bool collectDependencies)
         {
             Type = type;
             AbstractTarget = abstractTarget;

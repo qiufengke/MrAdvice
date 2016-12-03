@@ -9,7 +9,6 @@ namespace ArxOne.MrAdvice.Weaver
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
     using Annotation;
     using dnlib.DotNet;
     using Pointcut;
@@ -43,6 +42,13 @@ namespace ArxOne.MrAdvice.Weaver
         private PointcutSelector CreateAdviceSelector(ReflectionNode node, WeavingContext context)
         {
             var adviceSelector = new PointcutSelector();
+            // Advices should not advise themselves
+            var typeReflectionNode = node as TypeReflectionNode;
+            if (typeReflectionNode != null && IsMarker(typeReflectionNode.TypeDefinition, context.AdviceInterfaceType))
+            {
+                Logging.WriteDebug("Excluding {0} from itself", typeReflectionNode.TypeDefinition.FullName);
+                adviceSelector.ExcludeRules.Add(new PointcutSelectorRule(typeReflectionNode.TypeDefinition.FullName));
+            }
             var excludeAdviceAttributes = node.CustomAttributes.Where(ca => ca.AttributeType.SafeEquivalent(context.ExcludeAdviceAttributeType));
             foreach (var excludeAdviceAttribute in excludeAdviceAttributes)
             {
@@ -71,7 +77,7 @@ namespace ArxOne.MrAdvice.Weaver
         /// <param name="adviceType">Type of the advice.</param>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        private PointcutSelector GetPointcutSelector(ITypeDefOrRef adviceType, WeavingContext context)
+        private PointcutSelector GetPointcutSelector(TypeDef adviceType, WeavingContext context)
         {
             PointcutSelector pointcutRules;
             if (context.AdvicesRules.TryGetValue(adviceType, out pointcutRules))
@@ -83,12 +89,11 @@ namespace ArxOne.MrAdvice.Weaver
         /// <summary>
         /// Creates the pointcut rules for a given advice.
         /// </summary>
-        /// <param name="adviceType">Type of the advice.</param>
+        /// <param name="adviceTypeDef">The advice type definition.</param>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        private PointcutSelector CreatePointcutSelector(ITypeDefOrRef adviceType, WeavingContext context)
+        private PointcutSelector CreatePointcutSelector(TypeDef adviceTypeDef, WeavingContext context)
         {
-            var adviceTypeDef = TypeResolver.Resolve(adviceType);
             var rules = new PointcutSelector();
             foreach (var customAttribute in adviceTypeDef.CustomAttributes)
                 rules += CreatePointcutSelector(customAttribute, context);
