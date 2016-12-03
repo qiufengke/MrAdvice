@@ -77,6 +77,7 @@ namespace ArxOne.MrAdvice.Weaver
                 var weavingAdvicesMethods = GetMarkedMethods(moduleDefinition, context.WeavingAdviceInterfaceType, context).Where(IsWeavable).ToArray();
                 var weavableMethods = GetMarkedMethods(moduleDefinition, context.AdviceInterfaceType, context).Where(IsWeavable).ToArray();
                 auditTimer.NewZone("Abstract targets");
+                // TODO: abstracted targets can probably be generalized
                 var generatedFieldsToBeRemoved = new List<FieldDef>();
                 var methodsWithAbstractTarget = weavableMethods.Where(m => m.AbstractTarget).ToArray();
                 if (methodsWithAbstractTarget.Length > 0)
@@ -103,6 +104,12 @@ namespace ArxOne.MrAdvice.Weaver
                 auditTimer.NewZone("Abstract targets cleanup");
                 foreach (var generatedFieldToBeRemoved in generatedFieldsToBeRemoved)
                     generatedFieldToBeRemoved.DeclaringType.Fields.Remove(generatedFieldToBeRemoved);
+
+                auditTimer.NewZone("Write reflection");
+                // remove abstracted fields (they were removed anyway)
+                foreach (var reflectedMethod in context.ReflectedMethods)
+                    reflectedMethod.Value.References.RemoveAll(r => generatedFieldsToBeRemoved.Any(f => f.FullName == r.Field?.FullName));
+                WriteReflection(context);
 
                 auditTimer.LastZone();
 
@@ -229,7 +236,7 @@ namespace ArxOne.MrAdvice.Weaver
             var adviceExtensionsType = TypeResolver.Resolve(moduleDefinition, typeof(AdviceExtensions));
             var adviceHandleMethod = adviceExtensionsType.Methods.Single(m => m.IsPublic && m.HasGenericParameters && m.Name == nameof(AdviceExtensions.Handle));
             var methodsSearched = new HashSet<MethodDef>(new MethodReferenceComparer()) { adviceHandleMethod };
-            var foundHandledInterfaces = new HashSet<ITypeDefOrRef>(new TypeReferenceComparer());
+            var foundHandledInterfaces = new HashSet<ITypeDefOrRef>(TypeComparer.Instance);
             var methodsToSearch = new List<Tuple<MethodDef, int>> { Tuple.Create(adviceHandleMethod, 0) };
             while (methodsToSearch.Count > 0)
             {

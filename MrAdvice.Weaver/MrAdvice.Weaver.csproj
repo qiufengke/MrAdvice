@@ -101,7 +101,6 @@
     <Compile Include="Utility\ParamDefExtensions.cs" />
     <Compile Include="Utility\PropertyDefinitionExtensions.cs" />
     <Compile Include="Utility\TypeDefinitionExtensions.cs" />
-    <Compile Include="Utility\TypeReferenceComparer.cs" />
     <Compile Include="Utility\ModuleDefinitionExtensions.cs" />
     <Compile Include="Utility\ReflectionUtility.cs" />
     <Compile Include="MrAdviceStitcher.cs" />

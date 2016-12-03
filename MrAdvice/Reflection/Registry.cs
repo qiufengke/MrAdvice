@@ -17,7 +17,7 @@ namespace ArxOne.MrAdvice.Reflection
     /// - Shortcuts take parameters: firsts are method/type handle, then other parameters:
     ///   - execution point (method handle)
     ///   - referenced fields handles (for local fields on non generic types)
-    ///   - referenced fields+types handlers
+    ///   - referenced fields+types handles
     ///   - invoked methods handles (for local methods on non generic types)
     ///   - invoked mehohds+types handles
     /// </summary>
@@ -57,10 +57,10 @@ namespace ArxOne.MrAdvice.Reflection
         /// <param name="typeHandle">The type handle.</param>
         /// <param name="fields">The fields.</param>
         /// <param name="fieldsTypes">The fields types.</param>
-        public static void AddReferencedFields(RuntimeMethodHandle methodHandle, RuntimeTypeHandle typeHandle, RuntimeFieldHandle[] fields,
-            RuntimeTypeHandle[] fieldsTypes)
+        public static void AddReferencedFields(RuntimeMethodHandle methodHandle, RuntimeTypeHandle typeHandle,
+            RuntimeFieldHandle[] fields, RuntimeTypeHandle[] fieldsTypes)
         {
-            // ReflectionInfo.Get(methodHandle,typeHandle)
+            ReflectionInfo.Get(methodHandle, typeHandle).
         }
     }
 }

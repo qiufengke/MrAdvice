@@ -130,6 +130,14 @@ namespace ArxOne.MrAdvice.Weaver
 
         private readonly IDictionary<MethodDef, MethodReflection> _reflection = new Dictionary<MethodDef, MethodReflection>(new MethodReferenceComparer());
 
+        /// <summary>
+        /// Gets the reflected methods.
+        /// </summary>
+        /// <value>
+        /// The reflected methods.
+        /// </value>
+        public IEnumerable<KeyValuePair<MethodDef, MethodReflection>> ReflectedMethods => _reflection;
+
         public MethodReflection GetReflection(MethodDef method)
         {
             MethodReflection reflection;

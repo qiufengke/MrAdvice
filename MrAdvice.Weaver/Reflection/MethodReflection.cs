@@ -34,7 +34,7 @@ namespace ArxOne.MrAdvice.Reflection
         /// <value>
         /// The references.
         /// </value>
-        public IList<ReflectionReference> References { get; set; }
+        public List<ReflectionReference> References { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MethodReflection"/> class.

@@ -16,6 +16,17 @@ namespace ArxOne.MrAdvice.Weaver
 
     partial class AspectWeaver
     {
+        private void WriteReflection(WeavingContext context)
+        {
+            foreach (var pair in context.ReflectedMethods)
+                WriteReflection(pair.Value, context);
+        }
+
+        private void WriteReflection(MethodReflection methodReflection, WeavingContext context)
+        {
+
+        }
+
         private void CollectDependencies(MarkedNode markedMethod, WeavingContext context)
         {
             if (!markedMethod.CollectDependencies)

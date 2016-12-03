@@ -16,6 +16,11 @@ namespace ArxOne.MrAdvice.Utility
     public class TypeComparer : IEqualityComparer<ITypeDefOrRef>
     {
         /// <summary>
+        /// Prevents a default instance of the <see cref="TypeComparer"/> class from being created.
+        /// </summary>
+        private TypeComparer() { }
+
+        /// <summary>
         /// Determines whether the specified objects are equal.
         /// </summary>
         /// <param name="x">The first object of type <paramref name="T" /> to compare.</param>
@@ -43,6 +48,6 @@ namespace ArxOne.MrAdvice.Utility
         /// <summary>
         /// The instance
         /// </summary>
-        public static TypeComparer Instance = new TypeComparer();
+        public static readonly TypeComparer Instance = new TypeComparer();
     }
 }
